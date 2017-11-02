@@ -193,7 +193,11 @@ class LLT_ConjAdd(QMainWindow):
     
     def new(self):
           confirm = QMessageBox.question(self.w, 'New Word', 'Are you sure you want to clear all entries \nand start a new word?', QMessageBox.Yes | QMessageBox.No)
-        if confirm == QMessageBox.Yes:
+          if confirm == QMessageBox.Yes:
+            self.newDic['INF'] = ''
+            self.newDic["IND"] = ''
+            self.newDic['SUB'] = ''
+            self.newDic['IMP'] = ''
             self.infEntry.clear()
             for i in range(self.entryGridInd.count()):
                 item = self.entryGridInd.itemAt(i)
