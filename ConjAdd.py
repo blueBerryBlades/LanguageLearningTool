@@ -154,51 +154,48 @@ class LLT_ConjAdd(QMainWindow):
     
     def save(self):
         infinitive = self.infEntry.text().upper()
-        indList = []
-        subList = []
-        impList = []
-        for i in range(self.entryGridInd.count()):
-            item = self.entryGridInd.itemAt(i)
-            child =  item.widget()
-            indList.append(child.text().upper())
-        
-        for i in range(self.entryGridSub.count()):
-            item = self.entryGridSub.itemAt(i)
-            child =  item.widget()
-            subList.append(child.text().upper())
-        
-        for i in range(self.entryGridImpv.count()):
-            item = self.entryGridImpv.itemAt(i)
-            child =  item.widget()
-            impList.append(child.text().upper())
-        
-        self.newDic['INF'] = infinitive
-        self.newDic['IND'] = indList
-        self.newDic['SUB'] = subList
-        self.newDic['IMP'] = impList
-        
         if infinitive in self.wordList:
             msgBox = QMessageBox() 
             msgBox.setText(infinitive + ' already in dictionary')
             msgBox.exec_();
         else:
             self.wordList.append(infinitive)
+            indList = []
+            subList = []
+            impList = []
+            for i in range(self.entryGridInd.count()):
+                item = self.entryGridInd.itemAt(i)
+                child =  item.widget()
+                indList.append(child.text().upper())
+        
+            for i in range(self.entryGridSub.count()):
+                item = self.entryGridSub.itemAt(i)
+                child =  item.widget()
+                subList.append(child.text().upper())
+        
+            for i in range(self.entryGridImpv.count()):
+                item = self.entryGridImpv.itemAt(i)
+                child =  item.widget()
+                impList.append(child.text().upper())
+        
+                self.newDic['INF'] = infinitive
+                self.newDic['IND'] = indList
+                self.newDic['SUB'] = subList
+                self.newDic['IMP'] = impList
+        
             self.conjDicList.append(self.newDic)
             c = open('conj.txt','w')
             json.dump(self.conjDicList, c)
             c.close()
-        msgBox = QMessageBox() 
-        msgBox.setText(infinitive + ' has been saved')
-        msgBox.exec_();
+            msgBox = QMessageBox() 
+            msgBox.setText(infinitive + ' has been saved')
+            msgBox.exec_();
+            self.newDic = {'INF':'', 'IND':'', 'SUB':'','IMP':''}
     
+        
     def new(self):
-          confirm = QMessageBox.question(self.w, 'New Word', 'Are you sure you want to clear all entries \nand start a new word?', QMessageBox.Yes | QMessageBox.No)
-          if confirm == QMessageBox.Yes:
-            self.newDic['INF'] = ''
-            self.newDic["IND"] = ''
-            self.newDic['SUB'] = ''
-            self.newDic['IMP'] = ''
-            self.infEntry.clear()
+        confirm = QMessageBox.question(self.w, 'New Word', 'Are you sure you want to clear all entries \nand start a new word?', QMessageBox.Yes | QMessageBox.No)
+        if confirm == QMessageBox.Yes:
             for i in range(self.entryGridInd.count()):
                 item = self.entryGridInd.itemAt(i)
                 child =  item.widget()
@@ -213,6 +210,7 @@ class LLT_ConjAdd(QMainWindow):
                 child.clear()
         else:
             pass
+        
     
     def clear(self):
         confirm = QMessageBox.question(self.w, 'Clear', 'Are you sure you want to clear all entries?', QMessageBox.Yes | QMessageBox.No)
@@ -246,11 +244,11 @@ class LLT_ConjAdd(QMainWindow):
             c=open('conj.txt','r')
             self.conjDicList=json.load(c)
             c.close()
-        except:
-            self.conjDicList = []
-        if len(self.conjDicList) > 0:
             for item in self.conjDicList:
                 self.wordList.append(item['INF'])
+        
+        except:
+            self.conjDicList = []
         
         
 if __name__ == '__main__':
