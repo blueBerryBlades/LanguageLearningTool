@@ -90,7 +90,8 @@ class LLT_ConjAdd(QMainWindow):
             for j in range(2):
                 self.entry =  QLineEdit()
                 self.entryGridImpv.addWidget(self.entry, i, j)
-         
+        self.checkBut = QPushButton("Check")
+        self.checkBut.clicked.connect(self.check) 
         self.saveBut = QPushButton("Save")
         self.saveBut.clicked.connect(self.save)
         self.newBut = QPushButton("New Word")
@@ -139,6 +140,7 @@ class LLT_ConjAdd(QMainWindow):
         self.theGrid.addWidget(self.impvUdes, 23, 0)
         self.theGrid.addLayout(self.entryGridImpv, 20, 1, 4, 2)
         
+        self.theGrid.addWidget(self.checkBut, 19, 5)
         self.theGrid.addWidget(self.saveBut, 20, 5)
         self.theGrid.addWidget(self.clearBut, 21, 5)
         self.theGrid.addWidget(self.newBut, 22, 5)
@@ -151,7 +153,19 @@ class LLT_ConjAdd(QMainWindow):
         self.w.setLayout(self.theGrid)
         self.getDic()
         
-    
+    def check(self):
+        word = self.infEntry.text().upper()
+        if word in self.wordList:
+            msgBox = QMessageBox() 
+            msgBox.setText(word + ' already in dictionary')
+            msgBox.exec_();
+        else:
+            msgBox = QMessageBox() 
+            msgBox.setText(word + ' not in dictionary yet')
+            msgBox.exec_();
+            
+        
+        
     def save(self):
         infinitive = self.infEntry.text().upper()
         if infinitive in self.wordList:
