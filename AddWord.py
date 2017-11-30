@@ -36,6 +36,8 @@ class LLT_AddWord(QMainWindow):
         self.tranEntry = QLineEdit()
         self.tranEntry.setEnabled(False)
         
+        self.checkBut = QPushButton("Check")
+        self.checkBut.clicked.connect(self.check)
         self.saveBut = QPushButton("Save")
         self.saveBut.clicked.connect(self.save)
         self.clearBut = QPushButton("Clear")
@@ -58,10 +60,11 @@ class LLT_AddWord(QMainWindow):
         grid.addWidget(self.tranLab, 2, 0)
         grid.addWidget(self.tranEntry, 2, 1, 1, 3)
         
-        grid.addWidget(self.saveBut, 3, 0)
-        grid.addWidget(self.clearBut, 3, 1)
-        grid.addWidget(self.newBut, 3, 2)
-        grid.addWidget(self.exitBut, 3, 3)
+        grid.addWidget(self.checkBut, 3, 0)
+        grid.addWidget(self.saveBut, 3, 1)
+        grid.addWidget(self.clearBut, 3, 2)
+        grid.addWidget(self.newBut, 3, 3)
+        grid.addWidget(self.exitBut, 3, 4)
         
         self.getDics()
         self.setLists()
@@ -76,6 +79,17 @@ class LLT_AddWord(QMainWindow):
         self.okBut.setEnabled(False)
         self.wordEntry.setEnabled(True)
         self.tranEntry.setEnabled(True)
+        
+    def check(self):
+        word = self.wordEntry.text().upper()
+        if word in self.wordList:
+            msgBox = QMessageBox() 
+            msgBox.setText(word + ' already in dictionary')
+            msgBox.exec_();
+        else:
+            msgBox = QMessageBox() 
+            msgBox.setText(word + ' not in dictionary yet')
+            msgBox.exec_();
 
     def save(self):
         spanWord = self.wordEntry.text().upper()
