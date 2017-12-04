@@ -56,13 +56,17 @@ class LLT_Flash(QMainWindow):
         
 
     def flip(self):
-        self.wordLab.setText(self.currentWord1)
-    
+        if self.wordLab.text() == self.currentWord0:
+            self.wordLab.setText(self.currentWord1)
+        elif self.wordLab.text() == self.currentWord1:
+            self.wordLab.setText(self.currentWord0)
+             
     def next(self):
         self.currentWord = random.choice(self.wordList)
         self.currentWord0 = self.currentWord[0]
         self.currentWord1 = self.currentWord[1]
         self.wordLab.setText(self.currentWord0)
+        
     
     def exit(self):
         confirm = QMessageBox.question(self.w, 'Quit', 'Are you sure you want to exit?', QMessageBox.Yes | QMessageBox.No)
